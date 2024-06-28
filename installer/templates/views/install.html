@@ -1,0 +1,172 @@
+<div class="col-8" id="landing">
+  <div class="d-flex flex-column align-items-center">
+    <form class="w-100" id="installForm" autocomplete="off">
+      <!-- Installation path input -->
+      <div class="mb-3">
+        <label for="installPath" class="form-label">Trainz Installationsverzeichnis</label>
+        <div class="input-group">
+          <input type="text" class="form-control" name="installPath" id="installPath" placeholder="Kein Verzeichnis ausgewählt" required>
+          <button type="button" class="btn btn-secondary" id="selectInstallPath">Ordner auswählen</button>
+        </div>
+      </div>
+
+      <!-- Version selection -->
+      <div class="mb-3">
+        <label class="mb-2">Welche Version möchtest du herunterladen?</label>
+        <div class="card">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <div class="d-flex align-items-center form-check gap-3">
+                <input class="form-check-input" type="radio" name="downloadVersion" value="full" id="downloadVersionFull" style="margin-top: 0.15em" checked required>
+                <label class="form-check-label" for="downloadVersionFull">
+                  Unkomprimierte Version <span id="downloadFullSize"></span><br>
+                  <small class="text-muted">Schnellere Installation, benötigt mehr Speicherplatz</small>
+                </label>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="d-flex align-items-center form-check gap-3">
+                <input class="form-check-input" type="radio" name="downloadVersion" value="low" id="downloadVersionLow" style="margin-top: 0.15em" required>
+                <label class="form-check-label" for="downloadVersionLow">
+                  Komprimierte Version <span id="downloadLowSize"></span><br>
+                  <small class="text-muted">Empfohlen für langsame Internetverbindungen</small>
+                </label>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Button to show additional options -->
+      <a href="#" data-bs-toggle="modal" data-bs-target="#additionalOptionsModal">Zusätzliche Optionen anzeigen</a>
+
+      <!-- Install button -->
+      <div class="d-grid gap-3 mt-3">
+        <button type="submit" class="btn btn-primary btn-lg" disabled>Installation starten</button>
+        <small class="text-center text-muted">Die Installation kann ca. 1-2 Stunden dauern, abhängig von deiner Internetgeschwindigkeit und deinem Computer.</small>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Additional options modal -->
+<div class="modal fade" id="additionalOptionsModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <form class="modal-content" id="additionalOptionsForm" autocomplete="off">
+      <div class="modal-header">
+        <h5 class="modal-title" id="additionalOptionsModalLabel">Zusätzliche Optionen</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Patch built-in sounds -->
+        <div class="form-check mb-2">
+          <input class="form-check-input" type="checkbox" id="patchBuiltinSounds" name="patchBuiltinSounds">
+          <label class="form-check-label" for="patchBuiltinSounds" style="margin-left: 0.15rem">Weichensound-Patch installieren</label>
+        </div>
+
+        <!-- Downscale textures -->
+        <div class="form-check mb-2">
+          <input class="form-check-input" type="checkbox" id="downscaleTextures" name="downscaleTextures">
+          <label class="form-check-label" for="downscaleTextures" style="margin-left: 0.15rem">Texturen herunterskalieren (nur für schwache PCs)</label>
+        </div>
+
+        <!-- Freeintcam -->
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="enableFreeintcam" name="enableFreeintcam">
+          <label class="form-check-label" for="enableFreeintcam" style="margin-left: 0.15rem">Freie interne Kamera aktivieren (-freeintcam)</label>
+        </div>
+
+      </div>
+      <hr class="my-0">
+      <div class="modal-body">
+        <!-- Disclaimer -->
+        <p class="small text-muted">Die Optionen sollten nur von erfahrenen Nutzern verwendet werden. Falsche Einstellungen können zu Fehlern führen.</p>
+
+        <!-- Install since revision -->
+        <div class="d-flex align-items-center">
+          <div class="form-check" style="margin-right: 0.75rem">
+            <input class="form-check-input" type="checkbox" id="fromRevisionToggle">
+            <label class="form-check-label" for="fromRevisionToggle" style="margin-left: 0.15rem">Ab Revision nur installieren: </label>
+          </div>
+          <input type="number" class="form-control form-control-sm" id="fromRevision" name="fromRevision" min="0" max="0" style="width: 70px" disabled>
+        </div>
+
+        <!-- Max downloads -->
+        <div class="d-flex align-items-center">
+          <div class="form-check" style="margin-right: 0.75rem">
+            <input class="form-check-input" type="checkbox" id="maxDownloadsToggle">
+            <label class="form-check-label" for="maxDownloadsToggle" style="margin-left: 0.15rem">Maximale Anzahl an Downloads begrenzen: </label>
+          </div>
+          <input type="number" class="form-control form-control-sm" id="maxDownloads" name="maxDownloads" min="5" max="15" style="width: 70px" disabled>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+        <button type="submit" class="btn btn-primary">Speichern</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Nvidia warning modal -->
+<div class="modal fade" id="nvidiaWarningModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="nvidiaWarningModalLabel">Bevor du fortfährst...</h5>
+      </div>
+      <div class="modal-body">
+        <p class="fw-bold text-danger">Auf diesem System wurde eine Nvidia-Grafikkarte erkannt!</p>
+        <p>Es kann zu Fehlern kommen wie zBsp. schwarze Texturen, wenn die <b>hardwarebeschleunigte Texturkompression</b> in Trainz während der Installation <b><u>aktiviert</u></b> ist.</p>
+        <p class="mb-0">Bitte stelle sicher, dass diese Option im <a href="#" onclick="openContentManager()">Content Manager</a> ausgeschaltet ist, bevor du mit der Installation fortfährst.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" disabled>Schließen (30)</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    // Load file sizes from the dl server
+    $.getJSON('https://dl.u7-trainz.de/api/assets/details', function(data) {
+        $("#installForm").find("button[type=submit]").prop('disabled', false);
+        $("#downloadFullSize").text(`(${data.fullHuman})`);
+        $("#downloadLowSize").text(`(${data.lowHuman})`);
+        $("#fromRevision").attr('max', data.currentRevision);
+    });
+
+    // Enable the from revision input when the checkbox is checked
+    $('#fromRevisionToggle').change(function() {
+        $('#fromRevision').prop('disabled', !this.checked);
+        $('#fromRevision').prop('required', this.checked);
+    });
+
+    // Enable the max downloads input when the checkbox is checked
+    $('#maxDownloadsToggle').change(function() {
+        $('#maxDownloads').prop('disabled', !this.checked);
+        $('#maxDownloads').prop('required', this.checked);
+    });
+
+    // Reset countdown when nvidia warning modal is shown
+    $('#nvidiaWarningModal').on('show.bs.modal', function() {
+        // Get the close button and start the countdown
+        const closeButton = $('#nvidiaWarningModal').find('.modal-footer button');
+        closeButton.removeClass('btn-primary').addClass('btn-secondary').prop('disabled', true);
+        closeButton.text(`Schließen (30)`);
+
+        // Run down 30 seconds before making the button clickable
+        let seconds = 30;
+        let interval = setInterval(function() {
+            seconds--;
+            closeButton.text(`Schließen (${seconds})`);
+
+            // If the countdown is over, make the button clickable
+            if (seconds <= 0) {
+                clearInterval(interval);
+                closeButton.text('Schließen');
+                closeButton.removeClass('btn-secondary').addClass('btn-primary').prop('disabled', false);
+            }
+        }, 1000);
+    });
+</script>

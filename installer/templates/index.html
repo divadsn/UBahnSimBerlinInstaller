@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html data-bs-theme="dark" lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>U-Bahn Sim Berlin Installer</title>
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/fontawesome.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <!-- Settings button in the top right corner -->
+    <div class="position-fixed top-0 end-0 m-3 d-none" id="menu">
+      <!-- Language dropdown -->
+      <div class="btn-group" id="language">
+        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="fi fi-de"></i>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end" style="min-width: auto">
+          <li><a class="dropdown-item active" href="#"><i class="fi fi-de"></i> DE</a></li>
+          <li><a class="dropdown-item disabled" href="#"><i class="fi fi-gb"></i> EN</a></li>
+        </ul>
+      </div>
+
+      <!-- Settings modal -->
+      <button class="btn btn-outline-secondary ms-2 d-none" type="button" id="settings" data-bs-toggle="modal" data-bs-target="#settingsModal">
+        <i class="fa fa-cog"></i>
+      </button>
+    </div>
+
+    <!-- Page content -->
+    <main class="container-fluid h-100">
+      <div class="row min-vh-100 justify-content-center align-items-center" id="main">
+        <!-- Content will be loaded here -->
+        <div class="spinner-border m-5" style="width: 3rem; height: 3rem;" role="status">
+          <span class="visually-hidden">Lade...</span>
+        </div>
+      </div>
+    </main>
+
+    <!-- Update available --->
+    <div class="modal fade" id="updateModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="updateModalLabel">Update verfügbar: <span id="updateVersion"></span></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p class="mb-0">
+              Es steht eine neue Version des Installers zum Download bereit.<br>
+              Möchtest du das Update jetzt herunterladen?
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Später</button>
+            <a href="#" target="_blank" type="button" class="btn btn-primary">Herunterladen</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings modal -->
+    <div class="modal fade" id="settingsModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="settingsModalLabel">Einstellungen</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <!-- File path input -->
+            <div class="mb-3">
+              <label for="settingsTrainzInstallPath" class="form-label">Trainz Installationsverzeichnis</label>
+              <div class="input-group">
+                <input type="text" class="form-control" id="settingsTrainzInstallPath" placeholder="C:\Games\Auran\TS 2009" required>
+                <button type="button" class="btn btn-outline-secondary" id="settingsSelectInstallPath"><i class="fa fa-folder-open"></i></button>
+              </div>
+            </div>
+
+            <!-- Version selection -->
+            <label class="mb-2">Download-Version</label>
+            <div class="card">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                  <div class="d-flex align-items-center form-check gap-3">
+                    <input class="form-check-input" type="radio" name="downloadVersion" id="settingsDownloadFull" style="margin-top: 0.15em">
+                    <label class="form-check-label" for="settingsDownloadFull">
+                      Unkomprimierte Version <span id="fullSize"></span><br>
+                      <small class="text-muted">Schnellere Installation, benötigt mehr Speicherplatz</small>
+                    </label>
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div class="d-flex align-items-center form-check gap-3">
+                    <input class="form-check-input" type="radio" name="downloadVersion" id="settingsDownloadLow" style="margin-top: 0.15em">
+                    <label class="form-check-label" for="settingsDownloadLow">
+                      Komprimierte Version <span id="lowSize"></span><br>
+                      <small class="text-muted">Empfohlen für langsame Internetverbindungen</small>
+                    </label>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-danger me-auto"><i class="fa fa-history fa-fw"></i> Zurücksetzen</button>
+            <button type="button" class="btn btn-primary">Speichern</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Version info -->
+    <div class="position-fixed bottom-0 end-0 me-1">
+      <small class="text-muted">v1.1 beta</small>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="/static/js/app.js"></script>
+  </body>
+</html>

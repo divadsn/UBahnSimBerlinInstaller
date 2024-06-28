@@ -1,0 +1,430 @@
+
+driver
+{
+  train_camera_forward            plus
+  train_camera_backward           minus
+
+  train_dcc_down                  x, comma
+  train_dcc_up                    w, fullstop
+  train_dcc_stop                  s, slash
+  train_dcc_handbrake             a, apostrophe
+  
+  train_cabin_brake_release       KP9, kppgup
+  train_cabin_brake_lap           KP6, kpright
+  train_cabin_brake_application   KP3, kppgdn
+  train_cabin_brake_emergency     pause
+  train_cabin_brake_1             null
+  train_cabin_brake_2             null
+  train_cabin_brake_3             null
+  train_cabin_brake_4             null
+  train_cabin_brake_up            null
+  train_cabin_brake_down          null
+
+  train_cabin_indbrake_toggle     e, KP4, KPLeft
+  train_cabin_indbrake_bail       d, KP0, KPIns
+
+  ks_zgst_automat                 KP8
+  
+  train_cabin_throttle_up         KP8, kpup
+  train_cabin_throttle_down       KP2, kpdn
+  train_cabin_throttle_0          KP9, kpclear
+  train_cabin_throttle_1          null
+  train_cabin_throttle_2          null
+  train_cabin_throttle_3          null
+  train_cabin_throttle_4          null
+  train_cabin_throttle_5          null
+  train_cabin_throttle_6          null
+  train_cabin_throttle_7          null
+  train_cabin_throttle_8          null
+  
+  train_cabin_rev_forward         KPstar
+  train_cabin_rev_backward        KPslash
+  train_cabin_rev_neutral         null
+  train_cabin_rev_toggle          null
+
+  train_cabin_dyn_traction        KP9
+  train_cabin_dyn_neutral         null
+  train_cabin_dyn_brake           null
+  train_cabin_dyn_toggle          null
+  train_cabin_shovel_coal   	  space
+  train_cabin_coalman_wave	  F1
+  train_cabin_fans                shift space
+
+  train_cabin_firebox_door_toggle	pause, q
+  train_cabin_regulator_up		s
+  train_cabin_regulator_down	y
+  train_cabin_reverser_up		c
+  train_cabin_reverser_down		x
+  train_cabin_injector_up		a
+  train_cabin_injector_down		d
+  train_cabin_injector2_up		shift i
+  train_cabin_injector2_down		shift o
+  train_cabin_blower_up                 r
+  train_cabin_blower_down               5
+  train_cabin_reset_tripmeter		t
+  train_cabin_toggle_draincocks		alt d
+
+  train_cabin_aws_reset			alt space, ins
+  train_cabin_aws_isolate		alt 1
+  train_cabin_aws_activate   		alt 2
+  train_cabin_tpws_reset		alt 3
+  train_cabin_tpws_isolate		alt 4
+  train_cabin_tpws_activate		alt 5
+  train_cabin_tpws_override		alt 6
+  train_cabin_dra_on			alt 7
+  train_cabin_dra_off			alt 8
+  train_cabin_emergency_stop		alt 9
+  train_cabin_master_switch_on		alt 0
+  train_cabin_master_switch_off		alt 0
+  train_cabin_engine_on			alt [
+  train_cabin_engine_off		alt ]
+  train_cabin_panel_lamp_test		alt \
+  train_cabin_vigilance_foot_pedal	alt tilde
+  train_cabin_wipers_on			alt comma
+  train_cabin_wipers_off		alt period
+  train_cabin_hardware_0		alt ;
+  train_cabin_hardware_1		alt '
+
+  train_headlight_toggle          l
+  train_highbeam_toggle           shift l
+  train_ditchflash_toggle           ;
+  train_pantograph_toggle         KP1, KPEnd, end
+  train_horn                      h, KPplus
+  train_sand                      v, KPminus
+  train_bell                      b
+
+  camera_up                       up
+  camera_down                     down
+  camera_left                     left
+  camera_right                    right
+  camera_zoom_in                  pageup
+  camera_zoom_out                 pagedown
+  camera_mod_control              leftcontrolkey, rightcontrolkey
+  camera_mod_shift                leftshiftkey, rightshiftkey
+
+  hud_consist_toggle              null
+  hud_help_toggle                 ctrl h
+  
+  camera_internal                 1
+  camera_external                 2
+  camera_tracking                 3
+  camera_roaming                  4
+  camera_car                      alt ctrl shift c a r z
+
+  camera_prev                     leftbracket
+  camera_next                     rightbracket
+  camera_prev_fast                ctrl leftbracket
+  camera_next_fast                ctrl rightbracket
+  
+  cmd_metric_toggle               g
+  mode_decouple_toggle            ctrl d
+
+  cmd_close                       escape
+  cmd_wireframe_toggle            ctrl w
+  cmd_truewireframe_toggle        alt w
+  cmd_findobject                  ctrl f
+
+  mode_map_toggle                 m, ctrl m
+  cmd_pause                       p
+
+  cmd_help                        F1
+  hud_interface_toggle            F5
+  hud_driverbar_toggle		  F6
+  hud_buttonbar_toggle		  F7
+  hud_customhud_toggle		  F8
+  hud_controls_toggle		  F9
+
+  cmd_save                        ctrl s
+  cmd_load                        ctrl l
+  hud_objective_toggle            enter
+
+  cmd_tuning                      ctrl t
+
+  debug_log_camera_angle          ctrl f7
+  debug_show_autopilot_signal     alt home
+
+  train_reverse_heading           alt c
+  cmd_script_objectives           k
+
+  toggle_next_junction            j
+  toggle_prev_junction            ctrl j
+
+  driver_1                       ctrl 1
+  driver_2                       ctrl 2
+  driver_3                       ctrl 3
+  driver_4                       ctrl 4
+  driver_5                       ctrl 5
+  driver_6                       ctrl 6
+  driver_7                       ctrl 7
+  driver_up                      ctrl =
+  driver_down                    ctrl -
+  cmd_show_commodities_panel
+  cmd_show_waybills_panel
+
+  cmd_stop_schedule
+  cmd_continue_schedule
+  cmd_abandon_schedule
+  cmd_get_off_train
+
+  cmd_toggle_headtracker         alt h
+}
+
+
+surveyor
+{
+  cmd_newmap                      ctrl n
+  cmd_loadmap                     ctrl l
+  cmd_savemap                     ctrl s
+  cmd_editmap                     ctrl e
+  cmd_options                     ctrl o
+  cmd_tuning                      ctrl t
+  cmd_findobject                  ctrl f
+  cmd_minimap                     ctrl m
+  cmd_profiles                    ctrl p
+  cmd_rules                       ctrl r
+  cmd_copy                        ctrl c
+  cmd_paste                       ctrl v
+  cmd_cam_walk			  alt y
+  cmd_cam_fly			  alt u
+  cmd_cam_car			  alt ctrl shift z
+  cmd_rand_map			  alt ctrl shift p
+  cmd_smite			  alt ctrl a
+
+  hud_interface_toggle            ctrl space
+  hud_contextual_info_toggle      alt o
+
+  mode_topology                   F1
+  com_height_up                   u
+  com_height_down                 d
+  com_height_adjust               a
+  com_cursor_minus                minus
+  com_cursor_plus                 plus
+  com_height_sensitivity_minus    leftbracket
+  com_height_sensitivity_plus     rightbracket
+  com_height_get                  g
+  com_height_use                  h
+  com_plateau                     p
+  com_add_water                   w
+  com_delete_water                q
+  com_adjust_water_height         e
+  com_extend_section              x
+
+  com_displacement_rotation_minus shift leftbracket
+  com_displacement_rotation_plus  shift rightbracket
+  com_displacement_scale_minus    ctrl leftbracket
+  com_displacement_scale_plus     ctrl rightbracket
+
+  com_displace_apply              f
+  com_displacement_get            
+  
+  mode_paint                      f2
+  com_texture_rotation_minus      leftbracket
+  com_texture_rotation_plus       rightbracket
+  com_texture_scale_minus         ctrl leftbracket
+  com_texture_scale_plus          ctrl rightbracket
+  com_cursor_size_minus           minus
+  com_cursor_size_plus            plus
+  com_paint_get                   g
+  com_fill_grid_texture           l
+  com_select_box                  b
+  com_select_fill                 f
+  com_cancel_selection            d
+
+  mode_objects                    f3
+  com_object_filter               o
+  com_spline_filter               s
+  com_object_name_minus           minus
+  com_object_name_plus            plus
+  com_object_add                  a
+  com_object_move                 m
+  com_object_rotate               r
+  com_object_get                  g
+  com_object_delete               d
+  com_object_name                 n
+  com_object_adjust_height        h
+  com_object_spline_split         q
+  com_object_spline_height        h
+  com_object_spline_remove_vertex x
+  com_object_spline_insert        i
+  com_object_spline_smooth        s
+  
+  mode_tracks                     f4
+  com_track_spline_filter         t
+  com_track_object_filter         y
+  com_track_trackmark_filter      v
+  com_track_name_minus            minus
+  com_track_name_plus             plus
+  com_track_add                   a
+  com_track_move                  m
+  com_track_rotate                r
+  com_track_get                   g
+  com_track_delete                d
+  com_track_straighten            b
+  com_track_toggle_junction       j
+  com_track_renaming_stuff        n
+  com_track_split                 q
+  com_track_spline_height         h
+  com_track_spline_remove         x
+  com_track_spline_insert         i
+  com_track_spline_smooth         s
+  com_track_get_gradient          j
+  com_track_apply_gradient        k
+  com_track_get_curve             l
+
+  mode_world          f6
+  com_world_clock_add      a
+  com_world_clock_move    m
+  com_world_clock_delete    d
+  com_world_clock_red_minus  shift minus
+  com_world_clock_red_plus  shift plus
+  com_world_clock_green_minus  ctrl minus
+  com_world_clock_green_plus  ctrl plus
+  com_world_clock_blue_minus  alt minus
+  com_world_clock_blue_plus  alt plus
+  com_world_clock_minus    minus
+  com_world_clock_plus    plus
+  com_world_weather_minus       leftbracket
+  com_world_weather_plus        rightbracket
+  com_world_environment_minus   ctrl leftbracket
+  com_world_environment_plus    ctrl rightbracket
+  com_world_origin_add          o
+  com_world_origin_find         f
+  com_world_origin_edit         e
+
+  com_menu_undo          ctrl z
+  com_menu_redo          ctrl y
+  com_menu_search_panel  ctrl shift f
+
+  com_bookmark_1          1
+  com_bookmark_2          2
+  com_bookmark_3          3
+  com_bookmark_4          4
+  com_bookmark_5          5
+  com_bookmark_6          6
+  com_bookmark_7          7
+  com_bookmark_8          8
+  com_bookmark_9          9
+  com_bookmark_0          0
+  com_bookmark_set_1      ctrl 1
+  com_bookmark_set_2      ctrl 2
+  com_bookmark_set_3      ctrl 3
+  com_bookmark_set_4      ctrl 4
+  com_bookmark_set_5      ctrl 5
+  com_bookmark_set_6      ctrl 6
+  com_bookmark_set_7      ctrl 7
+  com_bookmark_set_8      ctrl 8
+  com_bookmark_set_9      ctrl 9
+  com_bookmark_set_0      ctrl 0
+  com_bookmark_clear_1    ctrl shift 1
+  com_bookmark_clear_2    ctrl shift 2
+  com_bookmark_clear_3    ctrl shift 3
+  com_bookmark_clear_4    ctrl shift 4
+  com_bookmark_clear_5    ctrl shift 5
+  com_bookmark_clear_6    ctrl shift 6
+  com_bookmark_clear_7    ctrl shift 7
+  com_bookmark_clear_8    ctrl shift 8
+  com_bookmark_clear_9    ctrl shift 9
+  com_bookmark_clear_0    ctrl shift 0
+
+  com_menu_wireframe   F9, ctrl w
+  com_menu_menubar     F10
+
+  com_menu_help        F12
+
+  mode_tools          F5
+  com_tools_place_camera    a
+  com_tools_move_camera    m
+  com_tools_delete_camera    d
+  com_tools_place_ruler    r
+  com_tools_move_ruler    t
+  com_tools_delete_ruler    y
+  com_tools_paste_height    s
+  com_tools_paste_rotation_minus  leftbracket
+  com_tools_paste_rotation_plus  rightbracket
+  com_tools_paste_height_relative  l
+  com_tools_select_box    b
+  com_tools_copy_paste    p
+  com_tools_cancel_selection  x
+
+  mode_trains          F7
+  com_train_filter               t
+  com_consist_filter             c
+  com_train_name_minus           minus
+  com_train_name_plus            plus
+  com_train_add                  a
+  com_train_move                 m
+  com_train_rotate               r
+  com_train_get                  g
+  com_train_delete               d
+  com_train_properties           p
+  com_train_change_heading       h
+  com_train_decouple             x
+	
+  cmd_quick_drive		 ctrl f2
+}
+
+standard_dialog
+{
+  std_save          s, ctrl s, enter
+  std_dont_save        d, ctrl d
+  std_no_save        enter, e, ctrl e, d, ctrl d
+  std_cancel          escape
+  std_new            n, ctrl n
+  std_load          enter
+  std_ok            enter, space
+  std_reset         r
+  std_yes           enter,y
+  std_no            escape,n
+}
+
+menu
+{
+  main_driver		d
+  main_surveyor		s
+  main_railyard		r
+  main_scenarios		e
+  main_exchange		x
+  main_credits		c
+  main_quit			escape, q
+
+  svyr_mainmenu       	escape, m
+  svyr_new          	n
+  svyr_delete       	d
+  svyr_accept       	enter
+  svyr_trainzmap        t
+
+  drvr_mainmenu       	escape, m
+  drvr_panel		tab
+  drvr_delete       	d
+  drvr_info			i
+  drvr_accept		enter
+
+  scen_back			escape, m
+  scen_accept		enter
+
+  yard_mainmenu		escape, m
+  yard_favorites		f
+  yard_info			tab
+  yard_horn			h
+  yard_lights		l
+  yard_pants		p
+  yard_low_beam		shift l
+  yard_ditch		;
+  yard_interface_toggle            ctrl space
+  yard_close		ctrl w, ctrl q
+}
+
+minimap 
+{
+  minimap_bg		alt b
+  minimap_gradients	alt g
+  minimap_junctions	alt j
+  minimap_signals	alt s
+  minimap_triggers	alt t
+  minimap_trackmarks	alt m
+  minimap_industries	alt i
+  minimap_namedobjects	alt n
+  minimap_objects	alt o
+  minimap_consists	alt c
+  minimap_ts_labels	alt l
+}
