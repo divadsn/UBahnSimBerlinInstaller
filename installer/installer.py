@@ -268,7 +268,7 @@ class AssetInstaller:
 
         # Show an error message based on the exception
         if isinstance(exc, requests.RequestException):
-            self.show_error("nointernet", "Keine Internetverbindung", f"Bitte überprüfe deine Internetverbindung und versuche es erneut.")
+            self.show_error("nointernet", "Keine Internetverbindung", f"Bitte überprüfe deine Internetverbindung und versuche es erneut.\nFehlercode: {fullname(exc)}")
         elif isinstance(exc, PermissionError):
             self.show_error("error", "Zugriffsfehler bei der Installation", "Der Installer hat keinen Schreibzugriff auf das Verzeichnis. Bitte führe die Installation als Administator erneut durch.")
         elif isinstance(exc, FileNotFoundError):
