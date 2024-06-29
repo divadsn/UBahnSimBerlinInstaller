@@ -4,7 +4,7 @@ import requests.utils
 from pathlib import Path
 from appdirs import user_data_dir
 
-__version__ = "1.1"
+__version__ = "1.2"
 
 if getattr(sys, 'frozen', False):
     BASE_PATH = Path(sys._MEIPASS) / "installer"
