@@ -79,9 +79,10 @@ class AssetInstaller:
         self.max_downloads = max_downloads
         self.downscale_textures = downscale_textures
         self.download_client = None
-        self.trainz_util = TrainzUtil(install_path)
+        self.trainz_util = TrainzUtil(install_path, timeout=15*60)
         self.assets = []
         self.failed_assets = []
+        self.average_speed = 0.0
         self.installed_count = 0
         self.cancelled = False
 
@@ -147,9 +148,6 @@ class AssetInstaller:
         self.update_progress("Warte auf die Installation von Assets...")
 
         def completion_callback(url: str, file_path: Path):
-            # Update the progress
-            self._update_download_progress()
-
             # Add the file path to the queue
             self.queue.put(file_path)
 
@@ -172,6 +170,11 @@ class AssetInstaller:
             self._update_download_progress()
             time.sleep(0.5)
 
+        # Remove download speed from progress
+        downloaded_count = self.download_client.downloaded_count
+        total_count = self.download_client.total_count
+        self.update_extra_progress(f"Assets werden heruntergeladen... ({downloaded_count}/{total_count})", 100, "100%")
+
         # Wait for the queue to finish
         self.queue.put(None)
         self.queue_thread.join()
@@ -180,8 +183,9 @@ class AssetInstaller:
         if self.cancelled:
             return
 
-        # Post-installation tasks and cleanup
         set_taskbar_progress(TaskbarProgressState.NORMAL, self.installed_count, len(self.assets))
+
+        # Post-installation tasks and cleanup
         self.update_progress("Fertigstellung der Installation...", 100, "")
         self.update_extra_progress(None)
 
@@ -253,15 +257,11 @@ class AssetInstaller:
     def _update_download_progress(self):
         total_count = self.download_client.total_count
         downloaded_count = self.download_client.downloaded_count
-
-        # Calculate the progress and speed
         progress = (downloaded_count / total_count) * 100
-        current_speed = format_speed(self.download_client.current_speed)
-        self.update_extra_progress(
-            text=f"Assets werden heruntergeladen ({downloaded_count}/{total_count})",
-            progress=progress,
-            label=f"{int(progress)}% ({current_speed})"
-        )
+
+        # Calculate average speed and update progress
+        self.average_speed = (self.average_speed + self.download_client.current_speed) / 2
+        self.update_extra_progress(f"Assets werden heruntergeladen ({downloaded_count}/{total_count})", progress, f"{int(progress)}% ({format_speed(self.average_speed)})")
 
     def _handle_error(self, exc: Exception):
         logger.error("Error during installation", exc_info=exc)
@@ -269,6 +269,8 @@ class AssetInstaller:
         # Show an error message based on the exception
         if isinstance(exc, requests.RequestException):
             self.show_error("nointernet", "Keine Internetverbindung", f"Bitte überprüfe deine Internetverbindung und versuche es erneut.\nFehlercode: {fullname(exc)}")
+        elif isinstance(exc, subprocess.TimeoutExpired):
+            self.show_error("error", "Timeout während der Installation", "Die Installation hat zu lange gedauert und musste abgebrochen werden.")
         elif isinstance(exc, PermissionError):
             self.show_error("error", "Zugriffsfehler bei der Installation", "Der Installer hat keinen Schreibzugriff auf das Verzeichnis. Bitte führe die Installation als Administator erneut durch.")
         elif isinstance(exc, FileNotFoundError):

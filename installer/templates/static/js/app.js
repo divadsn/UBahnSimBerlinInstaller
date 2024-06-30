@@ -1,6 +1,6 @@
 'use strict';
 
-const versionCode = 5;
+const versionCode = 6;
 
 // Flags storing check results
 let updateAvailable = false;
@@ -11,6 +11,7 @@ const additionalOptions = {};
 
 function showMainPage() {
     pywebview.api.isInstalled().then(function(response) {
+        pywebview.api.setConfirmClose(true);
         $('#main').load(response ? '/views/installed.html' : '/views/landing.html', function() {
             $('#menu').removeClass('d-none');
 
@@ -284,4 +285,13 @@ window.addEventListener('pywebviewready', function() {
         // Show error if there is no internet connection
         showError("nointernet", "Keine Internetverbindung", "Bitte überprüfe deine Internetverbindung und versuche es erneut.");
     });
+});
+
+window.addEventListener('load', function() {
+    // Show error if pywebview is not initialized after 60 seconds
+    setTimeout(function() {
+        if (!window.pywebview) {
+            $('#main').load('/views/errors/pywebview.html');
+        }
+    }, 60000);
 });
