@@ -79,7 +79,7 @@ class AssetInstaller:
         self.max_downloads = max_downloads
         self.downscale_textures = downscale_textures
         self.download_client = None
-        self.trainz_util = TrainzUtil(install_path)
+        self.trainz_util = TrainzUtil(install_path, timeout=10*60)
         self.assets = []
         self.failed_assets = []
         self.installed_count = 0
@@ -147,9 +147,6 @@ class AssetInstaller:
         self.update_progress("Warte auf die Installation von Assets...")
 
         def completion_callback(url: str, file_path: Path):
-            # Update the progress
-            self._update_download_progress()
-
             # Add the file path to the queue
             self.queue.put(file_path)
 
@@ -171,6 +168,11 @@ class AssetInstaller:
         while self.download_client.is_running():
             self._update_download_progress()
             time.sleep(0.5)
+
+        # Remove download speed from progress
+        downloaded_count = self.download_client.downloaded_count
+        total_count = self.download_client.total_count
+        self.update_extra_progress(f"Assets werden heruntergeladen... ({downloaded_count}/{total_count})", 100, "100%")
 
         # Wait for the queue to finish
         self.queue.put(None)

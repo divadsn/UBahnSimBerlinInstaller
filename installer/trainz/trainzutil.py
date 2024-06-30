@@ -11,16 +11,17 @@ class TrainzError(Exception):
 
 
 class TrainzUtil:
-    def __init__(self, trainz_path: Union[Path, str]):
+    def __init__(self, trainz_path: Union[Path, str], timeout: Optional[float] = None):
         trainzutil_path = Path(trainz_path) / "bin" / "TrainzUtil.exe"
 
         if not trainzutil_path.exists():
             raise FileNotFoundError(f"TrainzUtil.exe not found at: {trainz_path}")
 
         self.trainzutil_path = trainzutil_path
+        self.timeout = timeout
 
     def run_command(self, command: str, *args, timeout: Optional[float] = None) -> List[str]:
-        process = subprocess.run([self.trainzutil_path, command, *args], capture_output=True, encoding="utf-8", text=True, timeout=timeout, creationflags=subprocess.CREATE_NO_WINDOW)
+        process = subprocess.run([self.trainzutil_path, command, *args], capture_output=True, encoding="utf-8", text=True, timeout=timeout if timeout else self.timeout, creationflags=subprocess.CREATE_NO_WINDOW)
         output = process.stdout.splitlines()
 
         if process.returncode != 0:
