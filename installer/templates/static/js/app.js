@@ -11,6 +11,7 @@ const additionalOptions = {};
 
 function showMainPage() {
     pywebview.api.isInstalled().then(function(response) {
+        pywebview.api.setConfirmClose(true);
         $('#main').load(response ? '/views/installed.html' : '/views/landing.html', function() {
             $('#menu').removeClass('d-none');
 

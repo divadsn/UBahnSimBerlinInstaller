@@ -13,7 +13,7 @@ window = webview.create_window(
     height=600,
     resizable=False,
     background_color="#212529",
-    confirm_close=True,
+    confirm_close=False,
 )
 
 api._window = window
