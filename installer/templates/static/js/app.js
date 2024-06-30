@@ -285,3 +285,12 @@ window.addEventListener('pywebviewready', function() {
         showError("nointernet", "Keine Internetverbindung", "Bitte überprüfe deine Internetverbindung und versuche es erneut.");
     });
 });
+
+window.addEventListener('load', function() {
+    // Show error if pywebview is not initialized after 60 seconds
+    setTimeout(function() {
+        if (!window.pywebview) {
+            $('#main').load('/views/errors/pywebview.html');
+        }
+    }, 60000);
+});
