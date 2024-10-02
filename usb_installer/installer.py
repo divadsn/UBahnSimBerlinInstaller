@@ -22,11 +22,11 @@ from pydantic import BaseModel, field_validator
 from pydantic.alias_generators import to_camel
 from webview import Window
 
-from installer import USER_DATA_PATH, USER_AGENT, BASE_PATH
-from installer.downloader import DownloadClient
-from installer.trainz import Kuid, TrainzConfig, TrainzError, TrainzUtil, close_trainz_database, patcher
-from installer.utils import fullname, format_speed
-from installer.winforms import TaskbarProgressState, set_taskbar_progress
+from usb_installer import USER_DATA_PATH, USER_AGENT, BASE_PATH, TEMPLATES_PATH
+from usb_installer.downloader import DownloadClient
+from usb_installer.trainz import Kuid, TrainzConfig, TrainzError, TrainzUtil, close_trainz_database, patcher
+from usb_installer.utils import fullname, format_speed
+from usb_installer.winforms import TaskbarProgressState, set_taskbar_progress
 
 # API endpoint for assets
 ASSETS_URL = "https://dl.u7-trainz.de/api/assets.json"
@@ -60,7 +60,7 @@ class Asset(BaseModel):
         raise TypeError("Kuid must be a string or Kuid object")
 
     def get_url(self, download_version: str) -> str:
-        return f"https://dl.u7-trainz.de/assets/{download_version}/{self.file_id}.zip?r={self.revision}"
+        return f"https://dl.u7-trainz.de/assets-new/{download_version}/{self.file_id}_r{self.revision}.zip"
 
 
 class AssetsResponse(BaseModel):
@@ -251,7 +251,7 @@ class AssetInstaller:
                     f.write(f"{option}\n")
 
         # Copy modified keyboard.txt to settings folder
-        keyboard_file = BASE_PATH / "static" / "keyboard_de.txt"  # TODO: Add support for QWERTY
+        keyboard_file = TEMPLATES_PATH / "static" / "data" / "keyboard_de.txt"  # TODO: Add support for QWERTY
         shutil.copy(keyboard_file, self.install_path / "UserData" / "settings" / "keyboard.txt")
 
     def _update_download_progress(self):

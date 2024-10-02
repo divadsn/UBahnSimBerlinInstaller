@@ -1,9 +1,8 @@
 # -*- mode: python ; coding: utf-8 -*-
 block_cipher = None
 added_files = [
-    ('.\\installer\\dlls', '.\\installer\\dlls'),
-    ('.\\installer\\static', '.\\installer\\static'),
-    ('.\\installer\\templates', '.\\installer\\templates'),
+    ('.\\usb_installer\\dlls', '.\\usb_installer\\dlls'),
+    ('.\\usb_installer\\templates', '.\\usb_installer\\templates'),
 ]
 
 a = Analysis(['.\\index.py'],
@@ -27,7 +26,7 @@ exe = EXE(pyz,
           a.zipfiles,
           a.datas,
           [],
-          name='installer',
+          name='usb_installer',
           debug=False,
           bootloader_ignore_signals=False,
           strip=False,

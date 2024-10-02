@@ -11,11 +11,11 @@ import wmi
 from webview import Window
 from webview.platforms.winforms import BrowserView
 
-from installer import USER_DATA_PATH
-from installer.config import get_config
-from installer.installer import AssetInstaller
-from installer.trainz import find_trainz_install_path
-from installer.winforms import show_message_box, show_folder_picker_dialog, MessageBoxButtons, MessageBoxIcon
+from usb_installer import USER_DATA_PATH
+from usb_installer.config import get_config
+from usb_installer.installer import AssetInstaller
+from usb_installer.trainz import find_trainz_install_path
+from usb_installer.winforms import show_message_box, show_folder_picker_dialog, MessageBoxButtons, MessageBoxIcon
 
 config_path = USER_DATA_PATH / "config.json"
 

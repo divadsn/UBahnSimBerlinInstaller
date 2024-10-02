@@ -4,15 +4,18 @@ import requests.utils
 from pathlib import Path
 from appdirs import user_data_dir
 
-__version__ = "1.3"
+__version__ = "1.4"
 
 if getattr(sys, 'frozen', False):
-    BASE_PATH = Path(sys._MEIPASS) / "installer"
+    BASE_PATH = Path(sys._MEIPASS) / "usb_installer"
 else:
     BASE_PATH = Path(__file__).parent
 
 # Determine the path to the DLL files
 DLL_PATH = BASE_PATH / "dlls"
+
+# Determine the path to the templates folder
+TEMPLATES_PATH = BASE_PATH / "templates"
 
 # Determine the path of the local app data folder
 USER_DATA_PATH = Path(user_data_dir("Installer", "U-Bahn Sim Berlin"))

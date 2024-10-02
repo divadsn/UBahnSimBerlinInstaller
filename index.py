@@ -2,12 +2,12 @@ import sys
 import webview
 import webbrowser
 
-from installer.api import InstallerAPI
+from usb_installer.api import InstallerAPI
 
 api = InstallerAPI()
 window = webview.create_window(
     title="U-Bahn Sim Berlin Installer",
-    url="./installer/templates/index.html",
+    url="./usb_installer/templates/index.html",
     js_api=api,
     width=800,
     height=600,

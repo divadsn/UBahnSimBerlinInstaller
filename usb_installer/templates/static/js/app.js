@@ -1,6 +1,6 @@
 'use strict';
 
-const versionCode = 7;
+const versionCode = 8;
 
 // Flags storing check results
 let updateAvailable = false;
