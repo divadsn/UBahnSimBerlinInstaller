@@ -2,7 +2,6 @@
 block_cipher = None
 added_files = [
     ('.\\usb_installer\\dlls', '.\\usb_installer\\dlls'),
-    ('.\\usb_installer\\static', '.\\usb_installer\\static'),
     ('.\\usb_installer\\templates', '.\\usb_installer\\templates'),
 ]
 

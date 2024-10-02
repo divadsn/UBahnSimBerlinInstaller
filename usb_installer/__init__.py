@@ -14,6 +14,9 @@ else:
 # Determine the path to the DLL files
 DLL_PATH = BASE_PATH / "dlls"
 
+# Determine the path to the templates folder
+TEMPLATES_PATH = BASE_PATH / "templates"
+
 # Determine the path of the local app data folder
 USER_DATA_PATH = Path(user_data_dir("Installer", "U-Bahn Sim Berlin"))
 
