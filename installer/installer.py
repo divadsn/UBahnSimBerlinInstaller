@@ -271,6 +271,8 @@ class AssetInstaller:
             self.show_error("nointernet", "Keine Internetverbindung", f"Bitte überprüfe deine Internetverbindung und versuche es erneut.\nFehlercode: {fullname(exc)}")
         elif isinstance(exc, subprocess.TimeoutExpired):
             self.show_error("error", "Timeout während der Installation", "Die Installation hat zu lange gedauert und musste abgebrochen werden.")
+        elif isinstance(exc, TrainzError):
+            self.show_error("error", "Fehler während der Installation", str(exc))
         elif isinstance(exc, PermissionError):
             self.show_error("error", "Zugriffsfehler bei der Installation", "Der Installer hat keinen Schreibzugriff auf das Verzeichnis. Bitte führe die Installation als Administator erneut durch.")
         elif isinstance(exc, FileNotFoundError):
