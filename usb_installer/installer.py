@@ -60,7 +60,7 @@ class Asset(BaseModel):
         raise TypeError("Kuid must be a string or Kuid object")
 
     def get_url(self, download_version: str) -> str:
-        return f"https://dl.u7-trainz.de/assets/{download_version}/{self.file_id}.zip?r={self.revision}"
+        return f"https://dl.u7-trainz.de/assets-new/{download_version}/{self.file_id}_r{self.revision}.zip"
 
 
 class AssetsResponse(BaseModel):
