@@ -8,8 +8,8 @@ from typing import List, Callable
 
 import requests
 
-from installer import USER_AGENT
-from installer.utils import readable_size
+from usb_installer import USER_AGENT
+from usb_installer.utils import readable_size
 
 logger = logging.getLogger(__name__)
 

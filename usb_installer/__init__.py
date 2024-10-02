@@ -7,7 +7,7 @@ from appdirs import user_data_dir
 __version__ = "1.3"
 
 if getattr(sys, 'frozen', False):
-    BASE_PATH = Path(sys._MEIPASS) / "installer"
+    BASE_PATH = Path(sys._MEIPASS) / "usb_installer"
 else:
     BASE_PATH = Path(__file__).parent
 

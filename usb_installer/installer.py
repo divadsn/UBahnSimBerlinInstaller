@@ -22,11 +22,11 @@ from pydantic import BaseModel, field_validator
 from pydantic.alias_generators import to_camel
 from webview import Window
 
-from installer import USER_DATA_PATH, USER_AGENT, BASE_PATH
-from installer.downloader import DownloadClient
-from installer.trainz import Kuid, TrainzConfig, TrainzError, TrainzUtil, close_trainz_database, patcher
-from installer.utils import fullname, format_speed
-from installer.winforms import TaskbarProgressState, set_taskbar_progress
+from usb_installer import USER_DATA_PATH, USER_AGENT, BASE_PATH
+from usb_installer.downloader import DownloadClient
+from usb_installer.trainz import Kuid, TrainzConfig, TrainzError, TrainzUtil, close_trainz_database, patcher
+from usb_installer.utils import fullname, format_speed
+from usb_installer.winforms import TaskbarProgressState, set_taskbar_progress
 
 # API endpoint for assets
 ASSETS_URL = "https://dl.u7-trainz.de/api/assets.json"

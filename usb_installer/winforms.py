@@ -1,7 +1,7 @@
 import enum
 
 from typing import Optional
-from installer import DLL_PATH
+from usb_installer import DLL_PATH
 
 import clr
 
