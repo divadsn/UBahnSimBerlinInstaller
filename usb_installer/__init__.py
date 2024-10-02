@@ -4,7 +4,7 @@ import requests.utils
 from pathlib import Path
 from appdirs import user_data_dir
 
-__version__ = "1.3"
+__version__ = "1.4"
 
 if getattr(sys, 'frozen', False):
     BASE_PATH = Path(sys._MEIPASS) / "usb_installer"
