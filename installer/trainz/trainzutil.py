@@ -1,9 +1,22 @@
 import subprocess
 
+from dataclasses import dataclass
+
 from pathlib import Path
 from typing import List, Optional, Union
 
-__all__ = ["TrainzError", "TrainzUtil"]
+__all__ = ["AssetStatus", "TrainzError", "TrainzUtil"]
+
+
+@dataclass
+class AssetStatus:
+    open_for_edit: bool
+    installed: bool
+    archived: bool
+    download_station: bool
+    modified: bool
+    missing_dependencies: bool
+    faulty: bool
 
 
 class TrainzError(Exception):
@@ -24,14 +37,18 @@ class TrainzUtil:
         process = subprocess.run([self.trainzutil_path, command, *args], capture_output=True, encoding="utf-8", text=True, timeout=timeout if timeout else self.timeout, creationflags=subprocess.CREATE_NO_WINDOW)
         output = process.stdout.splitlines()
 
-        if process.returncode != 0:
-            for line in output:
-                if line.startswith("-"):
-                    raise TrainzError(line.split(" : ", maxsplit=1)[1].strip())
-            else:
+        for line in output:
+            if line.startswith("-"):
+                raise TrainzError(line.split(" : ", maxsplit=1)[1].strip())
+        else:
+            if process.returncode != 0:
                 raise subprocess.CalledProcessError(process.returncode, process.args, process.stdout, process.stderr)
 
         return output
+
+    def build_version(self, timeout: Optional[float] = None) -> int:
+        output = self.run_command("version", timeout=timeout)
+        return int(output[0].split()[1])
 
     def echo(self, message: str, timeout: Optional[float] = None) -> bool:
         output = self.run_command("echo", message, timeout=timeout)
@@ -72,3 +89,12 @@ class TrainzUtil:
             return False
 
         return True
+
+    def status_asset(self, kuid: str) -> AssetStatus:
+        output = self.run_command("status", kuid)
+        status = output[0].split(" : ", maxsplit=1)[1].split(" : ", maxsplit=1)[0]
+
+        if len(status) < 7:
+            raise TrainzError(f"Invalid status: {status}")
+
+        return AssetStatus(status[0] == "E", status[1] == "I", status[2] == "A", status[3] == "D", status[4] == "L", status[5] == "M", status[6] == "F")
