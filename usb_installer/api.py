@@ -4,8 +4,8 @@ import json
 from pathlib import Path
 from typing import Any, Optional, Dict
 
+import httpx
 import psutil
-import requests
 import wmi
 
 from webview import Window
@@ -112,7 +112,7 @@ class InstallerAPI:
     def checkForUpdates(self) -> Optional[int]:
         try:
             new_assets = AssetInstaller.get_assets(from_revision=self._installed_assets.last_revision)
-        except requests.HTTPError as e:
+        except httpx.HTTPStatusError as e:
             # Check if the server returned a 404 error
             if e.response.status_code == 404:
                 return None

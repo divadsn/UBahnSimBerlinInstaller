@@ -1,22 +1,22 @@
 [tool.poetry]
-name = "usb_installer"
-version = "1.4.0"
+name = "usb_installer_webview"
+version = "1.5.0"
 description = ""
 authors = ["David Sn <divad.nnamtdeis@gmail.com>"]
 readme = "README.md"
+package-mode = false
 
 [tool.poetry.dependencies]
-python = ">=3.12,<3.13"
+python = ">=3.13,<3.14"
 appdirs = "^1.4.4"
 chardet = "^5.2.0"
-psutil = "^6.0"
-pillow = "^10.4.0"
-pydantic = "^2.9.2"
-pyinstaller = "^6.10.0"
-pythonnet = "^3.0.4"
-pywebview = "5.1"
-requests = "^2.32.2"
-sqlalchemy = "^2.0.35"
+httpx = "^0.28.1"
+psutil = "^7.0"
+pillow = "^11.1.0"
+pydantic = "^2.11.2"
+pyinstaller = "^6.12.0"
+pythonnet = "^3.0.5"
+pywebview = "^5.4"
 wmi = "^1.5.1"
 
 [build-system]

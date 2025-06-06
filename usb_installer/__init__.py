@@ -1,5 +1,6 @@
 import sys
-import requests.utils
+
+import httpx
 
 from pathlib import Path
 from appdirs import user_data_dir
@@ -21,4 +22,4 @@ TEMPLATES_PATH = BASE_PATH / "templates"
 USER_DATA_PATH = Path(user_data_dir("Installer", "U-Bahn Sim Berlin"))
 
 # Create user-agent string
-USER_AGENT = f"USBInstaller/{__version__} (+https://dl.u7-trainz.de) {requests.utils.default_user_agent()}"
+USER_AGENT = f"USBInstaller/{__version__} (+https://dl.u7-trainz.de) {httpx._client.USER_AGENT}"

@@ -3,10 +3,9 @@ import time
 import threading
 
 from pathlib import Path
-from urllib.parse import urlparse, unquote
-from typing import List, Callable
+from typing import Callable, List, Tuple
 
-import requests
+import httpx
 
 from usb_installer import USER_AGENT
 from usb_installer.utils import readable_size
@@ -17,7 +16,7 @@ logger = logging.getLogger(__name__)
 class DownloadClient:
     def __init__(
         self,
-        urls: List[str],
+        urls: List[Tuple[str, str]],
         download_dir: Path,
         completion_callback: Callable[[str, Path], None],
         error_callback: Callable[[str, Exception], None],
@@ -28,6 +27,7 @@ class DownloadClient:
         self.completion_callback = completion_callback
         self.error_callback = error_callback
         self.max_retries = max_retries
+
         self.download_thread = threading.Thread(target=self._download_urls)
         self.stop_download = False
         self.current_speed = 0.0
@@ -41,8 +41,8 @@ class DownloadClient:
     def total_count(self) -> int:
         return len(self.urls)
 
-    def _download_url(self, url: str, session: requests.Session):
-        local_filename = self.download_dir / unquote(urlparse(url).path.split("/")[-1])
+    def _download_url(self, url: str, filename: str, client: httpx.Client):
+        local_filename = self.download_dir / filename
         temp_filename = local_filename.with_suffix(local_filename.suffix + ".part")
         logger.info(f"Downloading {url} to {local_filename}")
 
@@ -53,11 +53,10 @@ class DownloadClient:
             self.current_speed = 0.0
 
             try:
-                with session.get(url, timeout=60, stream=True) as r:
+                with client.stream("GET", url, follow_redirects=True, timeout=60) as r:
                     r.raise_for_status()
 
                     total_size_in_bytes = int(r.headers.get("content-length", 0))
-                    chunk_size = 4096
                     downloaded_size = 0
                     logger.info(f"Total size: {readable_size(total_size_in_bytes)}")
 
@@ -65,7 +64,7 @@ class DownloadClient:
                     start_time = time.time()
 
                     with open(temp_filename, 'wb') as f:
-                        for data in r.iter_content(chunk_size):
+                        for data in r.iter_bytes(chunk_size=4096):
                             if self.stop_download:
                                 logger.info("Download stopped by user")
                                 return  # Stop the download
@@ -80,12 +79,12 @@ class DownloadClient:
 
                 # Rename the file
                 temp_filename.replace(local_filename)
-                logger.info(f"Finished downloading {url}")
+                logger.info(f"Finished downloading {url} (took {elapsed_time:.2f} seconds, speed: {readable_size(self.current_speed)}/s)")
 
                 self.downloaded_count += 1
                 self.completion_callback(url, local_filename)
                 break  # Break the loop if download is successful
-            except requests.RequestException as e:
+            except httpx.RequestError as e:
                 retries += 1
                 logger.error(f"Error downloading {url}. Attempt {retries} of {self.max_retries}", exc_info=e)
                 if retries >= self.max_retries:
@@ -98,14 +97,12 @@ class DownloadClient:
     def _download_urls(self):
         logger.info(f"Starting download of {self.total_count} URLs")
 
-        with requests.Session() as session:
-            session.headers["User-Agent"] = USER_AGENT
-
-            for url in self.urls:
+        with httpx.Client(headers={"User-Agent": USER_AGENT}) as client:
+            for url, filename in self.urls:
                 if self.stop_download:
                     break
 
-                self._download_url(url, session)
+                self._download_url(url, filename, client)
 
         logger.info("Finished downloading URLs")
 
