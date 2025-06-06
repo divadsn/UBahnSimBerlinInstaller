@@ -14,15 +14,15 @@ from logging import getLogger
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
+import httpx
 import psutil
-import requests
 
 from PIL import Image
 from pydantic import BaseModel, field_validator
 from pydantic.alias_generators import to_camel
 from webview import Window
 
-from usb_installer import USER_DATA_PATH, USER_AGENT, BASE_PATH, TEMPLATES_PATH
+from usb_installer import USER_DATA_PATH, USER_AGENT, TEMPLATES_PATH
 from usb_installer.downloader import DownloadClient
 from usb_installer.trainz import Kuid, TrainzConfig, TrainzError, TrainzUtil, close_trainz_database, patcher
 from usb_installer.utils import fullname, format_speed
@@ -32,7 +32,7 @@ from usb_installer.winforms import TaskbarProgressState, set_taskbar_progress
 ASSETS_URL = "https://dl.u7-trainz.de/api/assets.json"
 
 # Kuid stub for scripts
-SCRIPTS_KUID = Kuid("kuid:1041339:100113")
+SCRIPTS_KUID = Kuid.from_string("kuid:1041339:100113")
 
 # Get logger
 logger = getLogger(__name__)
@@ -52,7 +52,7 @@ class Asset(BaseModel):
     @field_validator("kuid", mode="before")
     def validate_kuid(cls, value: str) -> Kuid:
         if isinstance(value, str):
-            return Kuid(value)
+            return Kuid.from_string(value)
 
         if isinstance(value, Kuid):
             return value
@@ -113,7 +113,7 @@ class AssetInstaller:
 
         try:
             assets_json = self.get_assets()
-        except requests.RequestException as e:
+        except httpx.HTTPError:
             self.show_error("nointernet", "Keine Internetverbindung", f"Bitte überprüfe deine Internetverbindung und versuche es erneut.")
             return
 
@@ -159,7 +159,7 @@ class AssetInstaller:
             # Pass the exception to the error handler
             self._handle_error(exc)
 
-        urls = [asset.get_url(self.download_version) for asset in self.assets]
+        urls = [(asset.get_url(self.download_version), f"{asset.file_id}.zip") for asset in self.assets]
 
         # Create the download client and start the download
         self.download_client = DownloadClient(urls, USER_DATA_PATH / "Temp", completion_callback, error_callback)
@@ -267,7 +267,7 @@ class AssetInstaller:
         logger.error("Error during installation", exc_info=exc)
 
         # Show an error message based on the exception
-        if isinstance(exc, requests.RequestException):
+        if isinstance(exc, httpx.HTTPError):
             self.show_error("nointernet", "Keine Internetverbindung", f"Bitte überprüfe deine Internetverbindung und versuche es erneut.\nFehlercode: {fullname(exc)}")
         elif isinstance(exc, subprocess.TimeoutExpired):
             self.show_error("error", "Timeout während der Installation", "Die Installation hat zu lange gedauert und musste abgebrochen werden.")
@@ -347,11 +347,11 @@ class AssetInstaller:
             local_filename.parent.mkdir(parents=True)
 
         # Download the scripts asset
-        with requests.get(asset.get_url(self.download_version), headers={"User-Agent": USER_AGENT}, stream=True) as r:
+        with httpx.stream("GET", asset.get_url(self.download_version), headers={"User-Agent": USER_AGENT}) as r:
             r.raise_for_status()
 
             with temp_filename.open("wb") as f:
-                for chunk in r.iter_content(chunk_size=4096):
+                for chunk in r.iter_bytes(chunk_size=4096):
                     f.write(chunk)
 
             temp_filename.replace(local_filename)
@@ -406,7 +406,7 @@ class AssetInstaller:
         else:
             request_url = ASSETS_URL
 
-        r = requests.get(request_url, headers={"User-Agent": USER_AGENT})
+        r = httpx.get(request_url, headers={"User-Agent": USER_AGENT})
         r.raise_for_status()
 
         # Parse the JSON response
